@@ -1,13 +1,14 @@
 import styles from "./Card.module.css";
 
 export default function Card(props) {
-  const { name, status, species, gender, origin, image, onClose } = props;
+  // eslint-disable-next-line no-unused-vars
+  const { id, name, status, species, gender, origin, image, onClose } = props;
 
   return (
     <div className={styles.cardContainer}>
       <div className={styles.header}>
         <div className={styles.wrapperButton}>
-          <button className={styles.btn} onClick={onClose}>
+          <button className={styles.btn} onClick={() => onClose(id)}>
             X
           </button>
         </div>
