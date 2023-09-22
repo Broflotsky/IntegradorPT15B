@@ -1,4 +1,5 @@
 import styles from "./Card.module.css";
+import { Link } from "react-router-dom";
 
 export default function Card(props) {
   // eslint-disable-next-line no-unused-vars
@@ -17,7 +18,12 @@ export default function Card(props) {
 
       <div className={styles.wrapperText}>
         <div className={name ? styles.name : styles.noname}>
-          <h1>{name}</h1>
+          <Link
+            to={`/detail/${id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <h1>{name}</h1>
+          </Link>
         </div>
 
         <h2>{species}</h2>

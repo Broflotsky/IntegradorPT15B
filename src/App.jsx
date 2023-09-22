@@ -3,8 +3,10 @@ import "./App.css";
 import Cards from "./components/Cards/Cards.jsx";
 import Nav from "./components/Nav/Nav";
 import axios from "axios";
-// import SearchBar from "./components/SearchBar/SearchBar.jsx";
-// import characters from "./data.js";
+import { Routes, Route } from "react-router-dom";
+import About from "./components/About/About";
+import Detail from "./components/Detail/Detail";
+import PATHROUTES from "./helpers/PathRoutes.helper";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -32,8 +34,14 @@ function App() {
   return (
     <div className="App">
       <Nav onSearch={onSearch} />
-      {/* <SearchBar onSearch={(characterID) => window.alert(characterID)} /> */}
-      <Cards characters={characters} onClose={onClose} />
+      <Routes>
+        <Route
+          path={PATHROUTES.HOME}
+          element={<Cards characters={characters} onClose={onClose} />}
+        />
+        <Route path={PATHROUTES.ABOUT} element={<About />} />
+        <Route path={PATHROUTES.DETAIL} element={<Detail />} />
+      </Routes>
     </div>
   );
 }
