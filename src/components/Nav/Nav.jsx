@@ -12,6 +12,9 @@ const Nav = (props) => {
         <Link to={PATHROUTES.HOME} className={styles.linkRouter}>
           Home
         </Link>
+        <Link to={PATHROUTES.FAVORITES} className={styles.linkRouter}>
+          Favorites
+        </Link>
         <Link
           style={{ textDecoration: "none", color: "inherit" }}
           to={PATHROUTES.ABOUT}

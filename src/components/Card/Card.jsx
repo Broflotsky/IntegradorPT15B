@@ -1,17 +1,56 @@
+import { connect } from "react-redux";
+import { addFav, removeFav } from "../../redux/actions";
 import styles from "./Card.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export default function Card(props) {
+function Card(props) {
   // eslint-disable-next-line no-unused-vars
-  const { id, name, status, species, gender, origin, image, onClose } = props;
+  const {
+    id,
+    name,
+    // status,
+    species,
+    gender,
+    // origin,
+    image,
+    onClose,
+    addFav,
+    removeFav,
+    myFavorites,
+  } = props;
+
+  const [isFav, setIsFav] = useState(false);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    myFavorites.forEach((fav) => {
+      if (fav.id === props.id) {
+        setIsFav(true);
+      }
+    });
+  }, [myFavorites]);
+
+  const handleFavorite = () => {
+    isFav ? removeFav(id) : addFav(props);
+    setIsFav(!isFav);
+  };
 
   return (
     <div className={styles.cardContainer}>
+      {isFav ? (
+        <button onClick={handleFavorite}>❤️</button>
+      ) : (
+        <button onClick={handleFavorite}>🤍</button>
+      )}
       <div className={styles.header}>
         <div className={styles.wrapperButton}>
-          <button className={styles.btn} onClick={() => onClose(id)}>
-            X
-          </button>
+          {pathname !== "/favorites" && (
+            <button className={styles.btn} onClick={() => onClose(id)}>
+              X
+            </button>
+          )}
         </div>
         <img src={image} alt="" />
       </div>
@@ -33,3 +72,20 @@ export default function Card(props) {
     </div>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addFav: (character) => {
+      dispatch(addFav(character));
+    },
+    removeFav: (id) => {
+      dispatch(removeFav(id));
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  return { myFavorites: state.myFavorites };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

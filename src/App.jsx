@@ -7,8 +7,12 @@ import { Routes, Route } from "react-router-dom";
 import About from "./components/About/About";
 import Detail from "./components/Detail/Detail";
 import PATHROUTES from "./helpers/PathRoutes.helper";
+// import Favorites from "./components/Favorites/Favorites";
+import { connect } from "react-redux";
+import Favorites from "./components/Favorites/Favorites";
 
 function App() {
+  // const { myFavorites } = props;
   const [characters, setCharacters] = useState([]);
 
   const onSearch = (id) => {
@@ -41,9 +45,20 @@ function App() {
         />
         <Route path={PATHROUTES.ABOUT} element={<About />} />
         <Route path={PATHROUTES.DETAIL} element={<Detail />} />
+        <Route path={PATHROUTES.FAVORITES} element={<Favorites />} />
+        {/* <Route
+          path={PATHROUTES.FAVORITES}
+          element={<Cards characters={myFavorites} onClose={onClose} />}
+        /> */}
       </Routes>
     </div>
   );
 }
 
-export default App;
+// export default App;
+
+const mapStateToProps = (state) => {
+  return { myFavorites: state.myFavorites };
+};
+
+export default connect(mapStateToProps, null)(App);
